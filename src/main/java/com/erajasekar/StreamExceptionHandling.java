@@ -25,4 +25,10 @@ public class StreamExceptionHandling {
                 .map(DayOfWeek::from)
                 .forEach(System.out::println);
     }
+/*
+    public static void handleMessage(String message) {
+        metadata = getMetadataFromSystem1();
+        response = processMessageFromSystem2(metadata);
+        publishResponseToSystem3();
+    }*/
 }
