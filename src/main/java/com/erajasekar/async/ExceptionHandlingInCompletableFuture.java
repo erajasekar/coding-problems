@@ -48,7 +48,7 @@ public class ExceptionHandlingInCompletableFuture {
 
           // Thread.sleep(200);
 
-           parseNumber4("1").thenAccept(v -> {
+         /*  parseNumber4("1").thenAccept(v -> {
                System.out.println(v);
 
             }).thenApply( v -> parseNumber3("1"))
@@ -67,10 +67,30 @@ public class ExceptionHandlingInCompletableFuture {
                        ex.printStackTrace();
                    });
 
+        */
+            parseNumber("5s").handle( (v , t) -> {
+                int newVal = v * 10;
+                System.out.println("newVal " + newVal);
+                return newVal;
+            }).thenApply( v -> {
+                int newVal = v * 10;
+                System.out.println("newVal apply " + newVal);
+                return newVal;
+            }).whenComplete((v , t) -> {
+                int newVal = v * 10;
+                System.out.println("newVal when complete " + newVal);
+            });
 
+            noReturn().handle((v, t) -> {
+
+                System.out.println("Val " + v + " th " + t + " is void " + (v instanceof Void) );
+                return null;
+            });
         }catch (Exception e){
-            System.out.println("Exception in main : " + e.getMessage());
+            e.printStackTrace();
         }
+
+
 
 
     }
@@ -85,11 +105,11 @@ public class ExceptionHandlingInCompletableFuture {
             }*/
             System.out.println("done");
                     return result;
-                 })
-                .exceptionally(e -> {
+                 });
+               /* .exceptionally(e -> {
                     System.out.println(e.getMessage());
                     return -1;
-                });
+                });*/
     }
 
     private static CompletableFuture<Integer> parseNumber2(String num){
@@ -105,6 +125,10 @@ public class ExceptionHandlingInCompletableFuture {
             }
             throw new RuntimeException(e);
         });
+    }
+
+    private static CompletableFuture<Void> noReturn(){
+        return CompletableFuture.completedFuture(null);
     }
 
 
