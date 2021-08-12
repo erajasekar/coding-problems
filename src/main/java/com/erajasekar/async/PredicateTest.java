@@ -10,7 +10,6 @@ public class PredicateTest {
         System.out.println(i);
     }
 
-    private doWork()
 
     private static <T> T validate(T v, Predicate<T> p, String msg){
         if (p.test(v)){
